@@ -1,13 +1,11 @@
 import styled from 'styled-components';
+import { Wrapper } from '../Wrapper';
 
 export const Container = styled.header`
   background: var(--blue);
 `;
 
-export const Content = styled.div`
-  max-width: 1120px;
-  margin: 0 auto;
-
+export const Content = styled(Wrapper)`
   padding: 2rem 1rem 12rem;
   display: flex;
   align-items: center;
