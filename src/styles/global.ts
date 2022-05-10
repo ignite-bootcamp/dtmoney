@@ -31,4 +31,22 @@ export const GlobalStyles = createGlobalStyle`
     background: var(--background);
     -webkit-font-smoothing: antialiased;
   }
+
+  body, input, button, textarea {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  [disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
