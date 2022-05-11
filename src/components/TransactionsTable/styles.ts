@@ -28,3 +28,12 @@ export const Container = styled.div`
     }
   }
 `;
+
+type ValueProps = {
+  type: 'income' | 'outcome';
+};
+
+export const Value = styled.td<ValueProps>`
+  color: ${({ type }) =>
+    type === 'income' ? 'var(--green)' : 'var(--red)'} !important;
+`;

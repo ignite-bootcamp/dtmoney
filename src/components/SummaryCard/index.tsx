@@ -1,3 +1,4 @@
+import { formatCurrency } from '../../utils/intl';
 import { Container } from './styles';
 
 export type SummaryCardProps = {
@@ -5,13 +6,6 @@ export type SummaryCardProps = {
   icon: string;
   value: number;
 };
-
-function formatCurrency(value: number) {
-  return Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(value);
-}
 
 export function SummaryCard({ icon, title, value }: SummaryCardProps) {
   return (

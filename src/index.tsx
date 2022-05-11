@@ -7,11 +7,33 @@ createServer({
   models: {
     transaction: Model
   },
+  seeds(server) {
+    server.db.loadData({
+      transactions: [
+        {
+          id: 1,
+          title: 'Curso',
+          value: 800,
+          category: 'Educação',
+          created_at: new Date().toISOString(),
+          type: 'outcome'
+        },
+        {
+          id: 2,
+          title: 'Salário',
+          value: 3600,
+          category: 'Trabalho',
+          created_at: new Date().toISOString(),
+          type: 'income'
+        }
+      ]
+    });
+  },
   routes() {
     this.namespace = 'api';
 
     this.get('/transactions', () => {
-      return this.schema.all('transactions');
+      return this.schema.all('transaction');
     });
 
     this.post('/transactions', (schema, request) => {
