@@ -6,6 +6,7 @@ import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import { useForm } from '../../hooks/useForm';
+import { api } from '../../services/api';
 
 type NewTransactionsModalProps = {
   isOpen: boolean;
@@ -32,10 +33,12 @@ export function NewTransactionsModal({
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
-    console.log({
+    const data = {
       ...values,
       type
-    });
+    };
+
+    api.post('/transactions', data);
   }
 
   return (
