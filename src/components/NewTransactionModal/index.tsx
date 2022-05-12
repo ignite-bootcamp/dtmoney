@@ -6,7 +6,7 @@ import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import { useForm } from '../../hooks/useForm';
-import { api } from '../../services/api';
+import { useTransactions } from '../../context/transactions';
 
 type NewTransactionsModalProps = {
   isOpen: boolean;
@@ -23,14 +23,16 @@ export function NewTransactionsModal({
   isOpen,
   onRequestClose
 }: NewTransactionsModalProps) {
+  const { createTransaction } = useTransactions();
   const [type, setType] = useState<'income' | 'outcome'>('income');
-  const { handleChange, values } = useForm<TransactionInputs>({
-    title: '',
-    value: 0,
-    category: ''
-  });
+  const { handleChange, values, resetToInitialValue } =
+    useForm<TransactionInputs>({
+      title: '',
+      value: 0,
+      category: ''
+    });
 
-  function handleCreateNewTransaction(event: FormEvent) {
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -38,7 +40,9 @@ export function NewTransactionsModal({
       type
     };
 
-    api.post('/transactions', data);
+    await createTransaction(data);
+    onRequestClose();
+    resetToInitialValue();
   }
 
   return (
