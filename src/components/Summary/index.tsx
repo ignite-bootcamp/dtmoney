@@ -1,34 +1,40 @@
-import { SummaryCard, SummaryCardProps } from '../SummaryCard';
+import { SummaryCard } from '../SummaryCard';
 import { Container } from './styles';
 
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import totalImg from '../../assets/total.svg';
-
-const cards: SummaryCardProps[] = [
-  {
-    title: 'Entradas',
-    icon: incomeImg,
-    value: 100
-  },
-  {
-    title: 'Saídas',
-    icon: outcomeImg,
-    value: 50
-  },
-  {
-    title: 'Total',
-    icon: totalImg,
-    value: 150
-  }
-];
+import { useTransactions } from '../../context/transactions';
 
 export function Summary() {
+  const { transactions } = useTransactions();
+
+  const summary = transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.type === 'income') {
+        acc.income += transaction.value;
+        acc.total += transaction.value;
+      }
+
+      if (transaction.type === 'outcome') {
+        acc.outcome += transaction.value;
+        acc.total -= transaction.value;
+      }
+
+      return acc;
+    },
+    {
+      income: 0,
+      outcome: 0,
+      total: 0
+    }
+  );
+
   return (
     <Container>
-      {cards.map((card) => (
-        <SummaryCard key={card.title} {...card} />
-      ))}
+      <SummaryCard title="Entradas" icon={incomeImg} value={summary.income} />
+      <SummaryCard title="Saídas" icon={outcomeImg} value={summary.outcome} />
+      <SummaryCard title="Total" icon={totalImg} value={summary.total} />
     </Container>
   );
 }
